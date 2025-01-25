@@ -1,10 +1,13 @@
-HELP.md
+# Ignore Maven build output
 target/
+
+# Ignore .mvn wrapper files (but keep the maven-wrapper.jar)
 !.mvn/wrapper/maven-wrapper.jar
+# Exclude target folders in the main and test directories
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### STS ###
+### STS (Spring Tool Suite) ###
 .apt_generated
 .classpath
 .factorypath
@@ -14,7 +17,7 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea
+.idea/
 *.iws
 *.iml
 *.ipr
@@ -31,3 +34,13 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Ignore logs
+*.log
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore temporary files
+*.swp
