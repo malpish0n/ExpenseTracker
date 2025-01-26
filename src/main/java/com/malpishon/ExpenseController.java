@@ -28,6 +28,5 @@ public class ExpenseController {
         expenseList.add(expense);
         return "redirect:/expenses";
     }
-
-
+    
 }
