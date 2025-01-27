@@ -33,6 +33,7 @@
       <th>Name</th>
       <th>Amount</th>
       <th>Type</th>
+      <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -40,6 +41,16 @@
       <td th:text="${expense.name}">Name</td>
       <td th:text="${expense.amount}">Amount</td>
       <td th:text="${expense.type}">Type</td>
+      <td>
+        <form action="/deleteExpense" method="post" style="display:inline;">
+          <input type="hidden" name="name" th:value="${expense.name}">
+          <button type="submit">Remove</button>
+        </form>
+        <form action="/editExpense" method="get" style="display:inline;">
+          <input type="hidden" name="name" th:value="${expense.name}">
+          <button type="submit">Edit</button>
+        </form>
+      </td>
     </tr>
     </tbody>
   </table>

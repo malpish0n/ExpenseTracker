@@ -2,13 +2,10 @@ package com.malpishon;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class ExpenseController {
@@ -17,9 +14,7 @@ public class ExpenseController {
 
     @GetMapping("/expenses")
     public String home(Model model) {
-        model.addAttribute("expenses", expenseList.stream()
-                .map(expense -> new Expense(expense.getName(), expense.getAmount(), expense.getType().toUpperCase()))
-                .collect(Collectors.toList()));
+        model.addAttribute("expenses", expenseList);
         return "index";
     }
 
@@ -28,5 +23,32 @@ public class ExpenseController {
         expenseList.add(expense);
         return "redirect:/expenses";
     }
-    
+
+    @PostMapping("/deleteExpense")
+    public String deleteExpense(@RequestParam String name) {
+        expenseList.removeIf(expense -> expense.getName().equalsIgnoreCase(name));
+        return "redirect:/expenses";
+    }
+
+    @GetMapping("/editExpense")
+    public String editExpense(@RequestParam String name, Model model) {
+        Expense expenseToEdit = expenseList.stream()
+                .filter(expense -> expense.getName().equalsIgnoreCase(name))
+                .findFirst()
+                .orElse(null);
+
+        model.addAttribute("expense", expenseToEdit);
+        return "editExpense";
+    }
+
+    @PostMapping("/updateExpense")
+    public String updateExpense(@ModelAttribute Expense updatedExpense) {
+        for (int i = 0; i < expenseList.size(); i++) {
+            if (expenseList.get(i).getName().equalsIgnoreCase(updatedExpense.getName())) {
+                expenseList.set(i, updatedExpense);
+                break;
+            }
+        }
+        return "redirect:/expenses";
+    }
 }
